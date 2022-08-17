@@ -1,0 +1,55 @@
+<div class="container">
+    <div *ngIf=dashboard.ativo class="legenda-verde">
+        <p>Serviço ativo</p>
+        <p>
+            <img src="/assets/servico-ativo.png" alt="Serviço ativo" class="status-servico">
+        </p>
+    </div>
+    <div *ngIf=!dashboard.ativo class="legenda-vermelha">
+        <p>Serviço offline</p>
+        <p>
+            <img src="/assets/servico-offline.png" alt="Serviço offline" class="status-servico">
+        </p>
+    </div>
+    <div>
+        <p>
+            Requests
+            <!-- <span class="legenda legenda-verde"></span>Requests ok
+            <span class="legenda legenda-amarela"></span>Requests lentos
+            <span class="legenda legenda-vermelha"></span>Requests com erro -->
+        </p>
+        <p>
+            <google-chart #chart [title]="title" [type]="type" [data]="data" [columns]="columns" [options]="options"
+                [width]="width" [height]="height">
+            </google-chart>
+        </p>
+    </div>
+    <div>
+        <p>Hora da consulta</p>
+        <p class="numero">{{ agora | date:'H:mm' }} </p>
+        <p>serviço online desde</p>
+        <p class="numero verde">{{ dashboard.onlineDesde }}</p>
+    </div>
+    <div>
+        <p>Tempo médio dos requests</p>
+        <p class="numero">{{ dashboard.requests?.tempoMedio }} ms</p>
+        <p class="min-max">
+            <span>mínimo</span>
+            <span>máximo</span>
+        </p>
+        <p class="min-max">
+            <span class="numero verde">{{ dashboard.requests?.tempoMinimo }} ms</span>
+            <span class="numero vermelho">{{ dashboard.requests?.tempoMaximo }} ms</span>
+        </p>
+    </div>
+    <div>
+        <p>Requests por cliente</p>
+        <p class="min-max" *ngFor="let cliente of dashboard.requests?.porCliente">
+            <span>
+                <img src="/assets/servidor.png" alt="Servidor">
+                {{ cliente.descricao }}
+            </span>
+            <span class="numero">{{ cliente.quantidade }}</span>
+        </p>
+    </div>
+</div>
